@@ -1,5 +1,7 @@
 Overview
 ========
+**Warning:** this is an example implementation. You will not be able to build as not all code required is available here and some is based on my private code.
+
 Uses EXIFtool to read geo tags from a set of tracking photos and updates another set of photos geo tags based on relative timestamps.
 
 Usage
