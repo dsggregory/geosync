@@ -1,0 +1,41 @@
+Uses Phil Harvey's EXIFTool from http://www.sno.phy.queensu.ca/~phil/exiftool
+
+0) Aliases
+I downloaded the dmg file and installed exiftool. Don't need the following:
+	alias exiftool='~/Download/Image-ExifTool-8.58/exiftool'
+alias exifgps='exiftool -DateTimeOriginal -GPSDateStamp -GPSTimeStamp -GPSLongitude -GPSLongitudeRef -GPSLatitude -GPSLatitudeRef -GPSAltitude -GPSAltitudeRef'
+
+1) Print EXIF tags
+  exiftool -s [-h] [-d '%Y/%m/%d %H:%M:%S %z'] <jpeg_file>
+
+2) Add diff to timestamps
+  exiftool "-DateTimeOriginal+=5:10:2 10:48:0" DIR
+or
+  exiftool "-AllDates+=23:49" -P -overwrite_original DIR
+
+3) Set times on image(s)
+  exiftool -AllDates="2011:05:21 12:00+1:00" -P -overwrite_original <file ...>
+  
+4) GEOTAGGING - http://www.sno.phy.queensu.ca/~phil/exiftool/exiftool_pod.html#geotagging_examples
+  a. iPhone needs GPSDateTime set before you extract a track log:
+     exiftool '-DateTimeOriginal>GPSDateStamp' -P -overwrite_original <file>
+  b. Generate a GPS track log from pictures that had GPS coords
+     exiftool -p ~/Download/Image-ExifTool-8.58/gpx.fmt -d %Y-%m-%dT%H:%M:%SZ dir > out.gpx
+  c. Use out.gpx to geotag pictures without GPS
+     exiftool -geotag track.log a.jpg
+  *** Does not work. I had to write ../bin/geosync instead. See examples below.	 
+
+5) Using Google Maps
+  a. Lookup map place using coords. Just enter the folowing onto the search box
+     latitude, longitude (descriptive text of place)
+	 ex. -1.32716666666667, 35.1016666666667 (Topi Plains)
+
+
+----
+
+./geosync -D -s ../iPhone_Scott -d ../Olympus -z 3 -i '2011:05:22 05:59:00' '2011:05:28 23:00:00'
+./geosync -D -s ../iPhone_Scott -d ../Olympus -z 2 -i '2011:05:29 23:00:00' '2011:06:02 00:00:00'
+./geosync -D -s ../iPhone_Scott -d ../Fuji -z 3 -i '2011:05:21 23:00:00' '2011:05:26 00:00:00'  
+./geosync -D -t ../iPhone.tracklog -d ../Fuji/Card-2 -z 3  
+./geosync -D -t ../iPhone.tracklog -d ../Fuji/Card-3 -z 3 -i '2011:05:28 00:00:00' '2011:05:29 23:00:00'
+./geosync -D -t ../iPhone.tracklog -d ../Fuji/Card-3 -z 2 -i '2011:05:30 00:00:00' '2011:06:30 00:00:00'

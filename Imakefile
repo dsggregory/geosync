@@ -1,0 +1,16 @@
+#include LurhqConfig
+
+CDEBUGFLAGS=	-g
+
+OBJS=	$(SRCS:.c=.o)
+
+EXTRA_INCLUDES=	-I/usr/local/ssl/include $(DEVLINCLUDES) 
+EXTRA_DEFINES=	$(ARCH_DEFINES)
+LOCAL_LDFLAGS=  $(DEVLLDFLAGS) $(ARCH_LDFLAGS)
+
+XML_CFLAGS=	`pkg-config --cflags libxml-2.0`
+XML_LIBS=	`pkg-config --libs libxml-2.0`
+SpecialObjectRule(geosync.o,geosync.c,$(XML_CFLAGS))
+NormalProgramTarget(geosync,geosync.o,$(DEPLIBS),NullParameter,-ldsg $(XML_LIBS) $(ARCH_LIBS))
+
+AllTarget(geosync)
