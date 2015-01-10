@@ -4,6 +4,7 @@ Uses EXIFtool to read geo tags from a set of tracking photos and updates another
 
 Usage
 ========
+```
 Usage: ./geosync [-r] <-s src_directory [-t tracklog]> <-d dest_file_or_dir> [-z hours_from_gmt_on_pictures] [-m max_delta_secs] [-i date1 date2] [-D]
   -s: Directory with pictures having GPS info as a tracking mechanism. If
       program has been run before with (-t) option and source pictures have
@@ -35,3 +36,4 @@ Usage: ./geosync [-r] <-s src_directory [-t tracklog]> <-d dest_file_or_dir> [-z
       geosync -t /tmp/foo.tkp -s /path/to/source/pictures
   2. Update GPS tags on pictures from trackpoint file just created
       geosync -t /tmp/foo.tkp -d /path/to/pictures/to/update
+```
